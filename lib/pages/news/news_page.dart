@@ -30,7 +30,7 @@ class NewsPage extends StatelessWidget {
                 ),
                 SizedBox(width: 10),
 
-                ///
+                /// User Info
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -69,14 +69,14 @@ class NewsPage extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Text(
-              'Latest News',
+              'News For You',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ),
 
           /// News List
           ListView.separated(
-            padding: EdgeInsets.fromLTRB(10, 0, 10, 50),
+            padding: EdgeInsets.fromLTRB(10, 0, 10, 80),
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             separatorBuilder: (context, index) => SizedBox(height: 20),

@@ -58,41 +58,50 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
                 ),
                 SizedBox(height: 8),
-                Row(
-                  children: [
-                    ///
-                    Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            'https://tse3.mm.bing.net/th/id/OIP.IvQ6zp4yhQsC3MFzlkrhTgHaHa?w=500&h=500&rs=1&pid=ImgDetMain&o=7&rm=3',
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 8),
+                  decoration: BoxDecoration(
+                    border: Border.symmetric(
+                      horizontal: BorderSide(color: Colors.grey),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ///
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              'https://tse3.mm.bing.net/th/id/OIP.IvQ6zp4yhQsC3MFzlkrhTgHaHa?w=500&h=500&rs=1&pid=ImgDetMain&o=7&rm=3',
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(width: 10),
+                      // SizedBox(width: 10),
 
-                    ///
-                    Text(
-                      'Thomas Shelby',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey,
+                      ///
+                      Text(
+                        'Thomas Shelby',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                        ),
                       ),
-                    ),
-                    Spacer(),
-                    Text(
-                      'Jan 15, 2022',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        color: Colors.grey,
-                        fontSize: 12,
+                      // Spacer(),
+                      Text(
+                        'Jan 15, 2022',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.grey,
+                          fontSize: 12,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 SizedBox(height: 20),
                 Text(

@@ -1,4 +1,4 @@
-import 'package:final_project_news_app/pages/news/news_page.dart';
+import 'package:final_project_news_app/pages/main_menu_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,9 +15,10 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
+        appBarTheme: AppBarTheme(backgroundColor: Colors.white),
         textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
       ),
-      home: NewsPage(),
+      home: MainMenuPage(),
     );
   }
 }
