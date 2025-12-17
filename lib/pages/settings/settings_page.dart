@@ -1,4 +1,7 @@
+import 'package:final_project_news_app/blocs/auth_cubit.dart';
+import 'package:final_project_news_app/utils/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -118,11 +121,22 @@ class _SettingsPageState extends State<SettingsPage> {
             ListTile(
               // leading: SvgPicture.asset('assets/Logout.svg'),
               title: Text('Logout'),
-              onTap: () {},
+              trailing: IconButton(
+                onPressed: () {
+                  context.read<AuthCubit>().logut();
+
+                  Navigator.restorablePushNamedAndRemoveUntil(
+                    context,
+                    AppRoutes.login,
+                    (route) => false,
+                  );
+                },
+                icon: Icon(Icons.logout_rounded),
+              ),
             ),
             SizedBox(height: 14),
             Container(height: 1, color: Colors.grey[400]),
-            SizedBox(height: 14),
+            SizedBox(height: 80),
           ],
         ),
       ),
