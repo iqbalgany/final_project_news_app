@@ -7,26 +7,44 @@ class UserService {
   }
 
   Future<void> register(UserModel user) async {
-    var box = await _openBox();
-    await box.put(user.email, user);
+    final box = await _openBox();
+    try {
+      await box.put(user.email, user);
+      await box.flush();
+    } finally {
+      await box.close();
+    }
   }
 
   Future<UserModel?> login(String email, String password) async {
-    var box = await _openBox();
-    final user = box.get(email);
-    if (user != null && user.password == password) {
-      return user;
+    final box = await _openBox();
+    try {
+      final user = box.get(email);
+      if (user != null && user.password == password) {
+        return user;
+      }
+      return null;
+    } finally {
+      await box.close();
     }
-    return null;
   }
 
   Future<void> updateProfile(UserModel user) async {
-    var box = await _openBox();
-    await box.put(user.email, user);
+    final box = await _openBox();
+    try {
+      await box.put(user.email, user);
+      await box.flush();
+    } finally {
+      await box.close();
+    }
   }
 
   Future<UserModel?> getUser(String email) async {
-    var box = await _openBox();
-    return box.get(email);
+    final box = await _openBox();
+    try {
+      return box.get(email);
+    } finally {
+      await box.close();
+    }
   }
 }

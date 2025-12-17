@@ -22,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  bool obscure = false;
+  bool obscure = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                 );
 
                 if (context.read<AuthCubit>().state.isAuthenticated) {
-                  Navigator.restorablePushNamed(context, AppRoutes.mainMenu);
+                  Navigator.pushReplacementNamed(context, AppRoutes.mainMenu);
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(

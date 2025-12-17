@@ -1,3 +1,4 @@
+import 'package:final_project_news_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -14,42 +15,21 @@ class ProfilePage extends StatelessWidget {
             ListTile(
               title: Text(
                 'Profile',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: blueColor,
+                ),
               ),
             ),
             SizedBox(height: 30),
 
             Center(
-              child: Stack(
-                children: [
-                  /// Profile Picture
-                  CircleAvatar(
-                    radius: 80,
-                    backgroundColor: Colors.grey[300],
-                    backgroundImage: NetworkImage(
-                      'https://tse3.mm.bing.net/th/id/OIP.IvQ6zp4yhQsC3MFzlkrhTgHaHa?w=500&h=500&rs=1&pid=ImgDetMain&o=7&rm=3',
-                    ),
-                  ),
-
-                  /// Edit Button
-                  Positioned(
-                    bottom: 4,
-                    right: 6,
-                    child: InkWell(
-                      onTap: () {},
-                      borderRadius: BorderRadius.circular(10),
-                      child: Container(
-                        padding: EdgeInsets.all(3),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white),
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.black,
-                        ),
-                        child: Icon(Icons.edit, color: Colors.white, size: 20),
-                      ),
-                    ),
-                  ),
-                ],
+              child: CircleAvatar(
+                radius: 80,
+                backgroundImage: NetworkImage(
+                  'https://tse3.mm.bing.net/th/id/OIP.IvQ6zp4yhQsC3MFzlkrhTgHaHa?w=500&h=500&rs=1&pid=ImgDetMain&o=7&rm=3',
+                ),
               ),
             ),
             SizedBox(height: 40),
@@ -57,7 +37,7 @@ class ProfilePage extends StatelessWidget {
             /// Fields 1: Name
             Container(
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
+                border: Border.all(color: blueColor),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: ListTile(title: Text('Thomas Shelby'), onTap: () {}),
@@ -67,7 +47,7 @@ class ProfilePage extends StatelessWidget {
             /// Fields 2: Email
             Container(
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
+                border: Border.all(color: blueColor),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: ListTile(
@@ -80,7 +60,7 @@ class ProfilePage extends StatelessWidget {
             /// Fields 3: Phone
             Container(
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
+                border: Border.all(color: blueColor),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: ListTile(title: Text('+1 (555) 123-4567'), onTap: () {}),
@@ -90,7 +70,7 @@ class ProfilePage extends StatelessWidget {
             /// Fields 4: Address
             Container(
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
+                border: Border.all(color: blueColor),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: ListTile(title: Text('Birmingham, UK'), onTap: () {}),
@@ -100,7 +80,7 @@ class ProfilePage extends StatelessWidget {
             FilledButton(
               onPressed: () {},
               style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.black),
+                backgroundColor: WidgetStatePropertyAll(blueColor),
                 minimumSize: WidgetStatePropertyAll(Size(double.infinity, 60)),
                 shape: WidgetStateProperty.all(
                   RoundedRectangleBorder(

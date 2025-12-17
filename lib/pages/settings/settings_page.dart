@@ -1,4 +1,5 @@
 import 'package:final_project_news_app/blocs/auth_cubit.dart';
+import 'package:final_project_news_app/utils/colors.dart';
 import 'package:final_project_news_app/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,24 +25,29 @@ class _SettingsPageState extends State<SettingsPage> {
             ListTile(
               title: Text(
                 'Settings',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: blueColor,
+                ),
               ),
             ),
             SizedBox(height: 14),
-            Container(height: 1, color: Colors.grey[400]),
+            Container(height: 1, color: blueColor),
             SizedBox(height: 14),
 
             ListTile(
-              // leading: SvgPicture.asset('assets/notification.svg'),
+              leading: Icon(Icons.notifications_none_outlined),
               title: Text('notifications'),
+              trailing: Icon(Icons.chevron_right_rounded),
               onTap: () {},
             ),
             SizedBox(height: 14),
-            Container(height: 1, color: Colors.grey[400]),
+            Container(height: 1, color: blueColor),
             SizedBox(height: 14),
 
             ListTile(
-              // leading: SvgPicture.asset('assets/dark_mode.svg'),
+              leading: Icon(Icons.light_mode_outlined),
               title: Text('Theme'),
               trailing: Switch(
                 value: darkMode,
@@ -52,80 +58,92 @@ class _SettingsPageState extends State<SettingsPage> {
               onTap: null,
             ),
             SizedBox(height: 14),
-            Container(height: 1, color: Colors.grey[400]),
+            Container(height: 1, color: blueColor),
             SizedBox(height: 14),
 
             ListTile(
-              // leading: SvgPicture.asset('assets/star.svg'),
+              leading: Icon(Icons.star_border),
               title: Text('Rate App'),
+              trailing: Icon(Icons.chevron_right_sharp),
               onTap: () {},
             ),
             SizedBox(height: 14),
-            Container(height: 1, color: Colors.grey[400]),
+            Container(height: 1, color: blueColor),
             SizedBox(height: 14),
 
             ListTile(
-              // leading: SvgPicture.asset('assets/share.svg'),
+              leading: Icon(Icons.share_outlined),
               title: Text('Share App'),
+              trailing: Icon(Icons.chevron_right_rounded),
               onTap: () {},
             ),
             SizedBox(height: 14),
-            Container(height: 1, color: Colors.grey[400]),
+            Container(height: 1, color: blueColor),
             SizedBox(height: 14),
 
             ListTile(
-              // leading: SvgPicture.asset('assets/privacy.svg'),
+              leading: Icon(Icons.privacy_tip_outlined),
               title: Text('Privacy Policy'),
+
+              trailing: Icon(Icons.chevron_right_rounded),
+
               onTap: () {},
             ),
             SizedBox(height: 14),
-            Container(height: 1, color: Colors.grey[400]),
+            Container(height: 1, color: blueColor),
             SizedBox(height: 14),
 
             ListTile(
-              // leading: SvgPicture.asset('assets/terms and policy.svg'),
+              leading: Icon(Icons.rule_outlined),
               title: Text('Terms & Conditions'),
+              trailing: Icon(Icons.chevron_right_rounded),
+
               onTap: () {},
             ),
             SizedBox(height: 14),
-            Container(height: 1, color: Colors.grey[400]),
+            Container(height: 1, color: blueColor),
             SizedBox(height: 14),
 
             ListTile(
-              // leading: SvgPicture.asset('assets/cookies.svg'),
+              leading: Icon(Icons.cookie_outlined),
               title: Text('Cookies Policy'),
+              trailing: Icon(Icons.chevron_right_rounded),
+
               onTap: () {},
             ),
             SizedBox(height: 14),
-            Container(height: 1, color: Colors.grey[400]),
+            Container(height: 1, color: blueColor),
             SizedBox(height: 14),
 
             ListTile(
-              // leading: SvgPicture.asset('assets/message.svg'),
+              leading: Icon(Icons.contact_phone_outlined),
               title: Text('Contact'),
+              trailing: Icon(Icons.chevron_right_rounded),
+
               onTap: () {},
             ),
             SizedBox(height: 14),
-            Container(height: 1, color: Colors.grey[400]),
+            Container(height: 1, color: blueColor),
             SizedBox(height: 14),
 
             ListTile(
-              // leading: SvgPicture.asset('assets/feedback.svg'),
+              leading: Icon(Icons.feedback_outlined),
               title: Text('Feedback'),
+              trailing: Icon(Icons.chevron_right_rounded),
               onTap: () {},
             ),
             SizedBox(height: 14),
-            Container(height: 1, color: Colors.grey[400]),
+            Container(height: 1, color: blueColor),
             SizedBox(height: 14),
 
             ListTile(
-              // leading: SvgPicture.asset('assets/Logout.svg'),
+              leading: Icon(Icons.run_circle_outlined),
               title: Text('Logout'),
               trailing: IconButton(
                 onPressed: () {
                   context.read<AuthCubit>().logut();
 
-                  Navigator.restorablePushNamedAndRemoveUntil(
+                  Navigator.pushNamedAndRemoveUntil(
                     context,
                     AppRoutes.login,
                     (route) => false,
@@ -135,7 +153,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ),
             SizedBox(height: 14),
-            Container(height: 1, color: Colors.grey[400]),
+            Container(height: 1, color: blueColor),
             SizedBox(height: 80),
           ],
         ),

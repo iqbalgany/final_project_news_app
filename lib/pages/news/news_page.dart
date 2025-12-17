@@ -1,4 +1,5 @@
 import 'package:final_project_news_app/pages/news/news_detail_page.dart';
+import 'package:final_project_news_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class NewsPage extends StatelessWidget {
@@ -70,7 +71,11 @@ class NewsPage extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Text(
               'News For You',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                color: blueColor,
+              ),
             ),
           ),
 

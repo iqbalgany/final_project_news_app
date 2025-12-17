@@ -1,6 +1,7 @@
 import 'package:final_project_news_app/pages/news/news_page.dart';
 import 'package:final_project_news_app/pages/profile/profile_page.dart';
 import 'package:final_project_news_app/pages/settings/settings_page.dart';
+import 'package:final_project_news_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class MainMenuPage extends StatefulWidget {
@@ -55,16 +56,16 @@ class _MainMenuPageState extends State<MainMenuPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            height: 5,
+            height: 3,
             width: 100,
             decoration: BoxDecoration(
-              color: currentIndex == index ? Colors.black : Colors.transparent,
+              color: currentIndex == index ? blueColor : Colors.transparent,
               borderRadius: BorderRadius.vertical(bottom: Radius.circular(5)),
             ),
           ),
           Icon(
             iconData,
-            color: currentIndex == index ? Colors.black : Colors.black54,
+            color: currentIndex == index ? blueColor : Colors.black54,
             size: 25,
           ),
           Text(
@@ -72,7 +73,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
             style: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 10,
-              color: Colors.black54,
+              color: currentIndex == index ? blueColor : Colors.black54,
             ),
           ),
           SizedBox(height: 5),
