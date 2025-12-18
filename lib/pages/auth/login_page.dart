@@ -1,5 +1,8 @@
 import 'package:d_input/d_input.dart';
 import 'package:final_project_news_app/blocs/auth_cubit.dart';
+import 'package:final_project_news_app/blocs/auth_state.dart';
+import 'package:final_project_news_app/data/locat_storage/auth_service.dart';
+import 'package:final_project_news_app/utils/injection.dart';
 import 'package:final_project_news_app/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,114 +15,150 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool obscure = true;
 
   @override
   void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
-  bool obscure = true;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(31, 97, 31, 0),
-        child: Column(
-          children: [
-            /// Login here text
-            Center(
-              child: Text(
-                'Login here',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                  color: Color(0xff1F41BB),
+    return BlocProvider(
+      create: (_) => AuthCubit(getIt<AuthService>()),
+      child: Scaffold(
+        body: BlocConsumer<AuthCubit, AuthState>(
+          listener: (context, state) {
+            print('🟣 LOGIN PAGE - State changed: ${state.runtimeType}');
+
+            if (state is AuthSuccess) {
+              print('🟣 LOGIN PAGE - AuthSuccess, navigasi ke main');
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  duration: Duration(seconds: 1),
+                  content: Text('Login Berhasil'),
                 ),
-              ),
-            ),
-            SizedBox(height: 26),
-
-            /// Welcome back text
-            Center(
-              child: Text(
-                'Welcome back you’ve\nbeen missed!',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
-              ),
-            ),
-            SizedBox(height: 74),
-
-            /// Email input
-            inputField('Email', null, emailController),
-            SizedBox(height: 29),
-
-            /// Password input
-            inputField(
-              'Password',
-              IconSpec(
-                onTap: () {
-                  obscure = !obscure;
-                  setState(() {});
-                },
-                icon: obscure ? Icons.visibility_off : Icons.visibility,
-                color: Color(0xff1F41BB),
-              ),
-              passwordController,
-            ),
-            SizedBox(height: 53),
-
-            /// Password input
-            GestureDetector(
-              onTap: () async {
-                await context.read<AuthCubit>().login(
-                  emailController.text,
-                  passwordController.text,
-                );
-
-                if (context.read<AuthCubit>().state.isAuthenticated) {
-                  Navigator.pushReplacementNamed(context, AppRoutes.mainMenu);
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Login gagal, periksa email/password'),
-                    ),
-                  );
-                }
-              },
-              child: Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(vertical: 15),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Color(0xff1F41BB),
+              );
+              Navigator.pushReplacementNamed(context, AppRoutes.mainMenu);
+            } else if (state is AuthError) {
+              print('🟣 LOGIN PAGE - AuthError: ${state.message}');
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  duration: Duration(seconds: 1),
+                  content: Text(state.message),
                 ),
-                child: Center(
-                  child: Text(
-                    'Sign In',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+              );
+            }
+          },
+          builder: (context, state) {
+            if (state is AuthLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(31, 97, 31, 0),
+              child: Column(
+                children: [
+                  /// Login here text
+                  Center(
+                    child: Text(
+                      'Login here',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                        color: Color(0xff1F41BB),
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ),
-            SizedBox(height: 50),
+                  SizedBox(height: 26),
 
-            /// Password input
-            GestureDetector(
-              onTap: () => Navigator.pushNamed(context, AppRoutes.signup),
-              child: Text(
-                'Create an account',
-                style: TextStyle(fontWeight: FontWeight.w600),
+                  /// Welcome back text
+                  Center(
+                    child: Text(
+                      'Welcome back you’ve\nbeen missed!',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 74),
+
+                  /// Email input
+                  inputField('Email', null, _emailController),
+                  SizedBox(height: 29),
+
+                  /// Password input
+                  inputField(
+                    'Password',
+                    IconSpec(
+                      onTap: () {
+                        obscure = !obscure;
+                        setState(() {});
+                      },
+                      icon: obscure ? Icons.visibility_off : Icons.visibility,
+                      color: Color(0xff1F41BB),
+                    ),
+                    _passwordController,
+                  ),
+                  SizedBox(height: 53),
+
+                  ///
+                  GestureDetector(
+                    onTap: () {
+                      print('🟡 LOGIN PAGE - Tombol ditekan');
+                      if (_emailController.text.isNotEmpty &&
+                          _passwordController.text.isNotEmpty) {
+                        print('🟡 LOGIN PAGE - Validasi berhasil');
+                        print('   Email: ${_emailController.text}');
+                        print('   Password: ${_passwordController.text}');
+
+                        context.read<AuthCubit>().login(
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                        );
+                      } else {
+                        print('🔴 LOGIN PAGE - Validasi gagal');
+                      }
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(vertical: 15),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color(0xff1F41BB),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Sign In',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 50),
+
+                  /// Password input
+                  GestureDetector(
+                    onTap: () => Navigator.pushNamed(context, AppRoutes.signup),
+                    child: Text(
+                      'Create an account',
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
+            );
+          },
         ),
       ),
     );

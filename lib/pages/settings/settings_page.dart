@@ -141,13 +141,8 @@ class _SettingsPageState extends State<SettingsPage> {
               title: Text('Logout'),
               trailing: IconButton(
                 onPressed: () {
-                  context.read<AuthCubit>().logut();
-
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    AppRoutes.login,
-                    (route) => false,
-                  );
+                  context.read<AuthCubit>().logout();
+                  Navigator.pushReplacementNamed(context, AppRoutes.login);
                 },
                 icon: Icon(Icons.logout_rounded),
               ),
