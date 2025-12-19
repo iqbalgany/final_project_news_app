@@ -2,6 +2,7 @@ import 'package:d_input/d_input.dart';
 import 'package:final_project_news_app/blocs/auth/auth_cubit.dart';
 import 'package:final_project_news_app/blocs/auth/auth_state.dart';
 import 'package:final_project_news_app/consts/colors.dart';
+import 'package:final_project_news_app/consts/routes.dart';
 import 'package:final_project_news_app/helpers/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,12 +61,10 @@ class _ProfilePageState extends State<ProfilePage> {
             }
           },
           builder: (context, state) {
-            // Handle loading state
             if (state is AuthLoading) {
               return const Center(child: CircularProgressIndicator());
             }
 
-            // Handle unauthenticated state
             if (state is! AuthSuccess) {
               return Center(
                 child: Column(
@@ -75,7 +74,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pushReplacementNamed(context, '/login');
+                        Navigator.pushReplacementNamed(
+                          context,
+                          AppRoutes.login,
+                        );
                       },
                       child: Text('Login'),
                     ),
@@ -86,7 +88,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
             final user = state.user;
 
-            // Update controllers with current user data
             if (_nameController.text != user.name) {
               _nameController.text = user.name ?? '';
             }

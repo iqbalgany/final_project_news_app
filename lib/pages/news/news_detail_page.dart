@@ -1,7 +1,11 @@
+import 'package:final_project_news_app/models/news_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lorem/flutter_lorem.dart';
+import 'package:intl/intl.dart';
 
 class NewsDetailPage extends StatefulWidget {
-  const NewsDetailPage({super.key});
+  final NewsModel news;
+  const NewsDetailPage({super.key, required this.news});
 
   @override
   State<NewsDetailPage> createState() => _NewsDetailPageState();
@@ -37,14 +41,21 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
           Container(
             width: double.infinity,
             height: 300,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                fit: BoxFit.fill,
-                image: NetworkImage(
-                  'https://tse3.mm.bing.net/th/id/OIP.IvQ6zp4yhQsC3MFzlkrhTgHaHa?w=500&h=500&rs=1&pid=ImgDetMain&o=7&rm=3',
-                ),
-              ),
-              borderRadius: BorderRadius.circular(0),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(0)),
+            child: Image.network(
+              widget.news.urlToImage ??
+                  'https://ichef.bbci.co.uk/news/1024/cpsprodpb/14A8C/production/_92802648_thinkstockphotos-609795616.jpg',
+              fit: BoxFit.fill,
+              errorBuilder: (context, error, stackTrace) {
+                return SizedBox(
+                  width: 200,
+                  height: 200,
+                  child: Image.network(
+                    'https://ichef.bbci.co.uk/news/1024/cpsprodpb/14A8C/production/_92802648_thinkstockphotos-609795616.jpg',
+                    fit: BoxFit.fill,
+                  ),
+                );
+              },
             ),
           ),
 
@@ -53,7 +64,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
             child: Column(
               children: [
                 Text(
-                  'Monarch population soars 4,900 percent since last year in thrilling 2021 western migration',
+                  widget.news.title ?? 'No Title',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
                 ),
@@ -74,9 +85,11 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                         height: 50,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
+
                           image: DecorationImage(
+                            fit: BoxFit.cover,
                             image: NetworkImage(
-                              'https://tse3.mm.bing.net/th/id/OIP.IvQ6zp4yhQsC3MFzlkrhTgHaHa?w=500&h=500&rs=1&pid=ImgDetMain&o=7&rm=3',
+                              'https://ichef.bbci.co.uk/news/1024/cpsprodpb/14A8C/production/_92802648_thinkstockphotos-609795616.jpg',
                             ),
                           ),
                         ),
@@ -85,7 +98,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
 
                       ///
                       Text(
-                        'Thomas Shelby',
+                        widget.news.author ?? 'No Author',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
@@ -93,7 +106,11 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                       ),
                       // Spacer(),
                       Text(
-                        'Jan 15, 2022',
+                        widget.news.publishedAt != null
+                            ? DateFormat(
+                                'dd MMM yyyy',
+                              ).format(widget.news.publishedAt!)
+                            : '-',
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           color: Colors.grey,
@@ -104,10 +121,26 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                   ),
                 ),
                 SizedBox(height: 20),
-                Text(
-                  'lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                  textAlign: TextAlign.justify,
-                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14),
+                Column(
+                  children: [
+                    Text(
+                      widget.news.content ?? lorem(paragraphs: 5, words: 1000),
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                      ),
+                    ),
+                    SizedBox(height: 15),
+                    Text(
+                      lorem(paragraphs: 5, words: 1000),
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

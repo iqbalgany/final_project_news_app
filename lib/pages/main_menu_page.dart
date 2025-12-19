@@ -1,7 +1,7 @@
+import 'package:final_project_news_app/consts/colors.dart';
 import 'package:final_project_news_app/pages/news/news_page.dart';
 import 'package:final_project_news_app/pages/profile/profile_page.dart';
 import 'package:final_project_news_app/pages/settings/settings_page.dart';
-import 'package:final_project_news_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class MainMenuPage extends StatefulWidget {

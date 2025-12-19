@@ -129,7 +129,10 @@ class _NewsPageState extends State<NewsPage> {
                   return GestureDetector(
                     onTap: () => Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => NewsDetailPage()),
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            NewsDetailPage(news: state.news![index]),
+                      ),
                     ),
                     child: Card(
                       elevation: 10,
@@ -172,7 +175,7 @@ class _NewsPageState extends State<NewsPage> {
                                 children: [
                                   /// News Title
                                   Text(
-                                    article.title ?? 'No',
+                                    article.title ?? 'No Title',
                                     maxLines: 3,
                                     style: TextStyle(
                                       fontWeight: FontWeight.w600,
