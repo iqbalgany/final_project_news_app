@@ -1,8 +1,8 @@
 import 'package:d_input/d_input.dart';
-import 'package:final_project_news_app/blocs/auth_cubit.dart';
-import 'package:final_project_news_app/blocs/auth_state.dart';
+import 'package:final_project_news_app/blocs/auth/auth_cubit.dart';
+import 'package:final_project_news_app/blocs/auth/auth_state.dart';
 import 'package:final_project_news_app/data/locat_storage/auth_service.dart';
-import 'package:final_project_news_app/utils/injection.dart';
+import 'package:final_project_news_app/helpers/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

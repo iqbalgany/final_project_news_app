@@ -1,8 +1,8 @@
 import 'package:d_input/d_input.dart';
-import 'package:final_project_news_app/blocs/auth_cubit.dart';
-import 'package:final_project_news_app/blocs/auth_state.dart';
-import 'package:final_project_news_app/utils/colors.dart';
-import 'package:final_project_news_app/utils/injection.dart';
+import 'package:final_project_news_app/blocs/auth/auth_cubit.dart';
+import 'package:final_project_news_app/blocs/auth/auth_state.dart';
+import 'package:final_project_news_app/consts/colors.dart';
+import 'package:final_project_news_app/helpers/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -133,7 +133,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       child: ListTile(
                         leading: Icon(Icons.person_outline),
-                        title: Text(user.name ?? "Belum diisi"),
+                        title: Text(user.name ?? "-"),
                       ),
                     ),
                     SizedBox(height: 20),
@@ -172,7 +172,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       child: ListTile(
                         leading: Icon(Icons.home_outlined),
-                        title: Text(user.address ?? "Belum diisi"),
+                        title: Text(user.address ?? "-"),
                       ),
                     ),
                     SizedBox(height: 20),

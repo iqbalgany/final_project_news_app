@@ -28,7 +28,7 @@ class UserModel extends HiveObject {
     required this.email,
     required this.password,
     required this.phoneNumber,
-    this.name,
+    this.name = 'New User',
     this.address,
   }) : id = id ?? const Uuid().v4();
 

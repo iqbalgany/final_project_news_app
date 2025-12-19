@@ -1,6 +1,8 @@
-import 'package:final_project_news_app/blocs/auth_cubit.dart';
-import 'package:final_project_news_app/utils/injection.dart';
-import 'package:final_project_news_app/utils/routes.dart';
+import 'package:final_project_news_app/blocs/auth/auth_cubit.dart';
+import 'package:final_project_news_app/blocs/news/news_cubit.dart';
+import 'package:final_project_news_app/consts/routes.dart';
+import 'package:final_project_news_app/data/remote_data/news_remote_data.dart';
+import 'package:final_project_news_app/helpers/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,6 +21,9 @@ class MainApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthCubit>(create: (context) => getIt<AuthCubit>()),
+        BlocProvider<NewsCubit>(
+          create: (context) => NewsCubit(NewsRemoteDataImpl()),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

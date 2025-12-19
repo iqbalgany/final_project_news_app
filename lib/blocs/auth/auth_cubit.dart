@@ -1,4 +1,4 @@
-import 'package:final_project_news_app/blocs/auth_state.dart';
+import 'package:final_project_news_app/blocs/auth/auth_state.dart';
 import 'package:final_project_news_app/data/locat_storage/auth_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
