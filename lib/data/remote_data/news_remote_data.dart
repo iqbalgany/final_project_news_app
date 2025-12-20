@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:final_project_news_app/consts/secrets.dart';
+import 'package:final_project_news_app/consts/api_key.dart';
 import 'package:final_project_news_app/models/news_model.dart';
 import 'package:flutter/rendering.dart';
 

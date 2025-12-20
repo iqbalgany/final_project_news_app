@@ -1,6 +1,6 @@
-import 'package:d_input/d_input.dart';
 import 'package:final_project_news_app/blocs/auth/auth_cubit.dart';
 import 'package:final_project_news_app/blocs/auth/auth_state.dart';
+import 'package:final_project_news_app/consts/colors.dart';
 import 'package:final_project_news_app/consts/routes.dart';
 import 'package:final_project_news_app/data/locat_storage/auth_service.dart';
 import 'package:final_project_news_app/helpers/injection.dart';
@@ -17,6 +17,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   bool obscure = true;
 
   @override
@@ -70,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 30,
-                        color: Color(0xff1F41BB),
+                        color: blueColor,
                       ),
                     ),
                   ),
@@ -89,22 +90,49 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(height: 74),
 
-                  /// Email input
-                  inputField('Email', null, _emailController),
-                  SizedBox(height: 29),
-
-                  /// Password input
-                  inputField(
-                    'Password',
-                    IconSpec(
-                      onTap: () {
-                        obscure = !obscure;
-                        setState(() {});
-                      },
-                      icon: obscure ? Icons.visibility_off : Icons.visibility,
-                      color: Color(0xff1F41BB),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        inputField(
+                          hint: 'Email',
+                          controller: _emailController,
+                          suffixIcon: null,
+                          validation: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Email tidak boleh kosong';
+                            }
+                            if (!value.contains('@')) {
+                              return 'Format email salah (harus mengandung @)';
+                            }
+                            if (!RegExp(
+                              r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                            ).hasMatch(value)) {
+                              return 'Masukkan email yang valid';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: 29),
+                        inputField(
+                          hint: 'Password',
+                          validation: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Password tidak boleh kosong';
+                            }
+                            return null;
+                          },
+                          controller: _passwordController,
+                          suffixIcon: obscure
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          onIconTap: () {
+                            obscure = !obscure;
+                            setState(() {});
+                          },
+                        ),
+                      ],
                     ),
-                    _passwordController,
                   ),
                   SizedBox(height: 53),
 
@@ -112,12 +140,10 @@ class _LoginPageState extends State<LoginPage> {
                   GestureDetector(
                     onTap: () {
                       print('🟡 LOGIN PAGE - Tombol ditekan');
-                      if (_emailController.text.isNotEmpty &&
-                          _passwordController.text.isNotEmpty) {
+                      if (_formKey.currentState!.validate()) {
                         print('🟡 LOGIN PAGE - Validasi berhasil');
                         print('   Email: ${_emailController.text}');
                         print('   Password: ${_passwordController.text}');
-
                         context.read<AuthCubit>().login(
                           email: _emailController.text,
                           password: _passwordController.text,
@@ -131,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                       padding: EdgeInsets.symmetric(vertical: 15),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Color(0xff1F41BB),
+                        color: blueColor,
                       ),
                       child: Center(
                         child: Text(
@@ -164,28 +190,35 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget inputField(
-    String hint,
-    IconSpec? suffixIcon,
-    TextEditingController controller,
-  ) {
-    return DInput(
-      boxSpec: BoxSpec(
-        border: BorderSide.none,
-        borderRadius: BorderRadius.circular(10),
-        focusedBorder: BorderSide(color: Color(0xff1F41BB)),
+  Widget inputField({
+    String? hint,
+    IconData? suffixIcon,
+    TextEditingController? controller,
+    Function()? onIconTap,
+    String? Function(String?)? validation,
+  }) {
+    return TextFormField(
+      controller: controller,
+      validator: validation,
+      cursorColor: blueColor,
+      obscureText: hint == 'Password' ? obscure : false,
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: Color(0xffF1F4FF),
+        hint: Text(hint!, style: TextStyle(color: Colors.grey)),
+        focusColor: blueColor,
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: blueColor),
+        ),
+        border: OutlineInputBorder(borderSide: BorderSide.none),
+        suffixIcon: suffixIcon != null
+            ? IconButton(onPressed: onIconTap, icon: Icon(suffixIcon))
+            : null,
+        suffixIconColor: blueColor,
+        errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.red),
+        ),
       ),
-      inputSpec: InputSpec(
-        hint: hint,
-        controller: controller,
-        backgroundColor: Color(0xffF1F4FF),
-        borderRadius: BorderRadius.circular(10),
-        cursorColor: Color(0xff1F41BB),
-        keyboardType: TextInputType.emailAddress,
-        obscure: hint == 'Password' ? obscure : false,
-      ),
-      suffixIcon:
-          suffixIcon ?? IconSpec(icon: Icons.email, color: Colors.transparent),
     );
   }
 }

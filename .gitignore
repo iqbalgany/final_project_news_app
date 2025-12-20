@@ -45,4 +45,4 @@ app.*.map.json
 /android/app/release
 
 # Mengabaikan file API Key dan rahasia lainnya
-lib/consts/secrets.dart
+lib/consts/api_key.dart
