@@ -60,128 +60,131 @@ class _LoginPageState extends State<LoginPage> {
               return const Center(child: CircularProgressIndicator());
             }
 
-            return Padding(
-              padding: const EdgeInsets.fromLTRB(31, 97, 31, 0),
-              child: Column(
-                children: [
-                  /// Login here text
-                  Center(
-                    child: Text(
-                      'Login here',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                        color: blueColor,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 26),
-
-                  /// Welcome back text
-                  Center(
-                    child: Text(
-                      'Welcome back you’ve\nbeen missed!',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 74),
-
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        inputField(
-                          hint: 'Email',
-                          controller: _emailController,
-                          suffixIcon: null,
-                          validation: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Email tidak boleh kosong';
-                            }
-                            if (!value.contains('@')) {
-                              return 'Format email salah (harus mengandung @)';
-                            }
-                            if (!RegExp(
-                              r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                            ).hasMatch(value)) {
-                              return 'Masukkan email yang valid';
-                            }
-                            return null;
-                          },
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(31, 97, 31, 0),
+                child: Column(
+                  children: [
+                    /// Login here text
+                    Center(
+                      child: Text(
+                        'Login here',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: blueColor,
                         ),
-                        SizedBox(height: 29),
-                        inputField(
-                          hint: 'Password',
-                          validation: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Password tidak boleh kosong';
-                            }
-                            return null;
-                          },
-                          controller: _passwordController,
-                          suffixIcon: obscure
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                          onIconTap: () {
-                            obscure = !obscure;
-                            setState(() {});
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 53),
-
-                  ///
-                  GestureDetector(
-                    onTap: () {
-                      print('🟡 LOGIN PAGE - Tombol ditekan');
-                      if (_formKey.currentState!.validate()) {
-                        print('🟡 LOGIN PAGE - Validasi berhasil');
-                        print('   Email: ${_emailController.text}');
-                        print('   Password: ${_passwordController.text}');
-                        context.read<AuthCubit>().login(
-                          email: _emailController.text,
-                          password: _passwordController.text,
-                        );
-                      } else {
-                        print('🔴 LOGIN PAGE - Validasi gagal');
-                      }
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.symmetric(vertical: 15),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: blueColor,
                       ),
-                      child: Center(
-                        child: Text(
-                          'Sign In',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
+                    ),
+                    SizedBox(height: 26),
+
+                    /// Welcome back text
+                    Center(
+                      child: Text(
+                        'Welcome back you’ve\nbeen missed!',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 74),
+
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          inputField(
+                            hint: 'Email',
+                            controller: _emailController,
+                            suffixIcon: null,
+                            validation: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Email tidak boleh kosong';
+                              }
+                              if (!value.contains('@')) {
+                                return 'Format email salah (harus mengandung @)';
+                              }
+                              if (!RegExp(
+                                r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                              ).hasMatch(value)) {
+                                return 'Masukkan email yang valid';
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(height: 29),
+                          inputField(
+                            hint: 'Password',
+                            validation: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Password tidak boleh kosong';
+                              }
+                              return null;
+                            },
+                            controller: _passwordController,
+                            suffixIcon: obscure
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            onIconTap: () {
+                              obscure = !obscure;
+                              setState(() {});
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 53),
+
+                    ///
+                    GestureDetector(
+                      onTap: () {
+                        print('🟡 LOGIN PAGE - Tombol ditekan');
+                        if (_formKey.currentState!.validate()) {
+                          print('🟡 LOGIN PAGE - Validasi berhasil');
+                          print('   Email: ${_emailController.text}');
+                          print('   Password: ${_passwordController.text}');
+                          context.read<AuthCubit>().login(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                          );
+                        } else {
+                          print('🔴 LOGIN PAGE - Validasi gagal');
+                        }
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.symmetric(vertical: 15),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: blueColor,
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Sign In',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 50),
+                    SizedBox(height: 50),
 
-                  /// Password input
-                  GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, AppRoutes.signup),
-                    child: Text(
-                      'Create an account',
-                      style: TextStyle(fontWeight: FontWeight.w600),
+                    /// Password input
+                    GestureDetector(
+                      onTap: () =>
+                          Navigator.pushNamed(context, AppRoutes.signup),
+                      child: Text(
+                        'Create an account',
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           },

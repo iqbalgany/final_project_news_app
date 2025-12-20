@@ -53,11 +53,12 @@ class _NewsPageState extends State<NewsPage> {
                       height: 70,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            'https://tse3.mm.bing.net/th/id/OIP.IvQ6zp4yhQsC3MFzlkrhTgHaHa?w=500&h=500&rs=1&pid=ImgDetMain&o=7&rm=3',
-                          ),
-                        ),
+                        color: blueColor,
+                      ),
+                      child: Icon(
+                        Icons.person_outline,
+                        color: Colors.white,
+                        size: 50,
                       ),
                     ),
                     SizedBox(width: 10),

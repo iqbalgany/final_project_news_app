@@ -144,7 +144,7 @@ class _SignupPageState extends State<SignupPage> {
                               RegExp regExp = RegExp(pattern);
 
                               if (!regExp.hasMatch(value)) {
-                                return 'Masukkan nomor telepon Indonesia yang valid (contoh: 0812...)';
+                                return 'Masukkan Nomor Indonesia (Ex: 0812..)';
                               }
                               return null;
                             },

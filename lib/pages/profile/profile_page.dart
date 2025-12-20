@@ -119,8 +119,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     Center(
                       child: CircleAvatar(
                         radius: 80,
-                        backgroundImage: NetworkImage(
-                          'https://tse3.mm.bing.net/th/id/OIP.IvQ6zp4yhQsC3MFzlkrhTgHaHa?w=500&h=500&rs=1&pid=ImgDetMain&o=7&rm=3',
+                        backgroundColor: blueColor,
+                        child: Icon(
+                          Icons.person_outline,
+                          size: 120,
+                          color: Colors.white,
                         ),
                       ),
                     ),
