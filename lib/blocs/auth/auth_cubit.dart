@@ -24,40 +24,27 @@ class AuthCubit extends Cubit<AuthState> {
     required String password,
     required String phoneNumber,
   }) async {
-    print('🟢 CUBIT REGISTER - Mulai register');
-    print('   Email: $email');
-    print('   Password: $password');
-    print('   Phone: $phoneNumber');
-
     emit(AuthLoading());
     try {
-      print('🟢 CUBIT - Memanggil _authService.register()...');
       final user = await _authService.register(
         email: email,
         password: password,
         phoneNumber: phoneNumber,
       );
-      print('🟢 CUBIT - Register berhasil! User: ${user.email}');
       emit(AuthSuccess(user));
     } catch (e) {
-      print('🔴 CUBIT - Register error: $e');
       emit(AuthError(e.toString()));
     }
   }
 
   Future<void> login({required String email, required String password}) async {
-    print('🟢 CUBIT LOGIN - Mulai login');
-    print('   Email: $email');
-    print('   Password: $password');
-
     emit(AuthLoading());
+
     try {
-      print('🟢 CUBIT - Memanggil _authService.login()...');
       final user = await _authService.login(email: email, password: password);
-      print('🟢 CUBIT - Login berhasil! User: ${user.email}');
+
       emit(AuthSuccess(user));
     } catch (e) {
-      print('🔴 CUBIT - Login error: $e');
       emit(AuthError(e.toString()));
     }
   }
@@ -67,41 +54,32 @@ class AuthCubit extends Cubit<AuthState> {
     required String address,
   }) async {
     if (state is AuthSuccess) {
-      print('🟢 CUBIT - Updating profile...');
-
       final currentUser = (state as AuthSuccess).user;
 
       emit(AuthLoading());
       try {
-        print('🟢 CUBIT - Memanggil _authService.updateProfile()...');
         final user = await _authService.updateProfile(
           userId: currentUser.id,
           name: name,
           address: address,
         );
-        print('🟢 CUBIT - Update profile berhasil!');
 
         emit(AuthSuccess(user));
       } catch (e) {
-        print('🔴 CUBIT - Update profile error: $e');
         emit(AuthError(e.toString()));
       }
     }
   }
 
   Future<void> fetchUser() async {
-    print('🔄 CUBIT - Fetching current user data...');
     try {
       final user = await _authService.getCurrentUser();
       if (user != null) {
-        print('🔄 CUBIT - User data fetched: ${user.email}');
         emit(AuthSuccess(user));
       } else {
-        print('🔄 CUBIT - No user logged in');
         emit(AuthLoggetOut());
       }
     } catch (e) {
-      print('🔴 CUBIT - Fetch user error: $e');
       emit(AuthError(e.toString()));
     }
   }

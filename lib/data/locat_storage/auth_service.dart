@@ -12,12 +12,9 @@ class AuthService {
     try {
       await _userBoxInstance.put(key, user);
     } catch (e) {
-      print('❌ Error putting to Hive: $e');
-
-      print('🗑️ Clearing corrupt data...');
       await _userBoxInstance.clear();
+
       await _userBoxInstance.put(key, user);
-      print('✅ Retry successful');
     }
   }
 
@@ -26,17 +23,12 @@ class AuthService {
     required String password,
     required String phoneNumber,
   }) async {
-    print(
-      '🔵 REGISTER - Email: $email, Password: $password, Phone: $phoneNumber',
-    );
-
     final existingUser = _userBoxInstance.values.firstWhere(
       (user) => user.email == email,
       orElse: () => UserModel(email: '', password: '', phoneNumber: ''),
     );
 
     if (existingUser.email.isNotEmpty) {
-      print('❌ REGISTER - Email sudah terdaftar!');
       throw Exception('Email sudah terdaftar');
     }
 
@@ -48,9 +40,6 @@ class AuthService {
 
     await _safePut(newUser.id, newUser);
 
-    print('✅ REGISTER - Berhasil! User ID: ${newUser.id}');
-    print('📦 Total users di database: ${_userBoxInstance.length}');
-
     return newUser;
   }
 
@@ -58,30 +47,16 @@ class AuthService {
     required String email,
     required String password,
   }) async {
-    print('🔵 LOGIN - Email: $email, Password: $password');
-
-    print('📦 Total users di database: ${_userBoxInstance.length}');
-    print('🗄️ Box path: ${_userBoxInstance.path}');
-    print('📝 Box name: ${_userBoxInstance.name}');
-
-    print('👥 Semua users:');
-    for (var user in _userBoxInstance.values) {
-      print('   - Email: ${user.email}, Password: ${user.password}');
-    }
-
     final user = _userBoxInstance.values.firstWhere(
       (user) => user.email == email && user.password == password,
       orElse: () => UserModel(email: '', password: '', phoneNumber: ''),
     );
 
     if (user.email.isEmpty) {
-      print('❌ LOGIN - Email atau password salah!');
       throw Exception('Email atau password salah');
     }
 
     await _currentUserBoxInstance.put('userId', user.id);
-
-    print('✅ LOGIN - Berhasil! User: ${user.email}');
 
     return user;
   }
@@ -102,10 +77,6 @@ class AuthService {
     String? name,
     String? address,
   }) async {
-    print(
-      '🔵 UPDATE PROFILE - userId: $userId, name: $name, address: $address',
-    );
-
     try {
       final user = _userBoxInstance.get(userId);
       if (user == null) {
@@ -118,11 +89,7 @@ class AuthService {
 
       return updateUser;
     } catch (e) {
-      print('❌ UPDATE PROFILE ERROR: $e');
-      print('   Error type: ${e.runtimeType}');
-
       if (e.toString().contains('HiveError')) {
-        print('🗑️ Detected corrupt data, clearing...');
         await _userBoxInstance.clear();
         await _currentUserBoxInstance.clear();
         throw Exception('Data corupt. Silahkan login ulang');

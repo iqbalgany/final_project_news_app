@@ -35,10 +35,7 @@ class _SignupPageState extends State<SignupPage> {
       child: Scaffold(
         body: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
-            print('🟣 REGISTER PAGE - State changed: ${state.runtimeType}');
-
             if (state is AuthSuccess) {
-              print('🟣 REGISTER PAGE - AuthSuccess, navigasi ke login');
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   duration: Duration(seconds: 1),
@@ -47,7 +44,6 @@ class _SignupPageState extends State<SignupPage> {
               );
               Navigator.pop(context);
             } else if (state is AuthError) {
-              print('🟣 REGISTER PAGE - AuthError: ${state.message}');
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   duration: Duration(seconds: 1),
@@ -158,21 +154,13 @@ class _SignupPageState extends State<SignupPage> {
                     ///
                     GestureDetector(
                       onTap: () {
-                        print('🟡 REGISTER PAGE - Tombol ditekan');
                         if (_formKey.currentState!.validate()) {
-                          print('🟡 REGISTER PAGE - Validasi berhasil');
-                          print('   Email: ${_emailController.text}');
-                          print('   Password: ${_passwordController.text}');
-                          print('   Phone: ${_phoneNumberController.text}');
-
                           context.read<AuthCubit>().register(
                             email: _emailController.text,
                             password: _passwordController.text,
                             phoneNumber: _phoneNumberController.text,
                           );
-                        } else {
-                          print('🔴 REGISTER PAGE - Validasi gagal');
-                        }
+                        } else {}
                       },
                       child: Container(
                         width: double.infinity,

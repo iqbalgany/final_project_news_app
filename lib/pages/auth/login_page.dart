@@ -34,10 +34,7 @@ class _LoginPageState extends State<LoginPage> {
       child: Scaffold(
         body: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
-            print('🟣 LOGIN PAGE - State changed: ${state.runtimeType}');
-
             if (state is AuthSuccess) {
-              print('🟣 LOGIN PAGE - AuthSuccess, navigasi ke main');
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   duration: Duration(seconds: 1),
@@ -46,7 +43,6 @@ class _LoginPageState extends State<LoginPage> {
               );
               Navigator.pushReplacementNamed(context, AppRoutes.mainMenu);
             } else if (state is AuthError) {
-              print('🟣 LOGIN PAGE - AuthError: ${state.message}');
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   duration: Duration(seconds: 1),
@@ -140,17 +136,11 @@ class _LoginPageState extends State<LoginPage> {
                     ///
                     GestureDetector(
                       onTap: () {
-                        print('🟡 LOGIN PAGE - Tombol ditekan');
                         if (_formKey.currentState!.validate()) {
-                          print('🟡 LOGIN PAGE - Validasi berhasil');
-                          print('   Email: ${_emailController.text}');
-                          print('   Password: ${_passwordController.text}');
                           context.read<AuthCubit>().login(
                             email: _emailController.text,
                             password: _passwordController.text,
                           );
-                        } else {
-                          print('🔴 LOGIN PAGE - Validasi gagal');
                         }
                       },
                       child: Container(

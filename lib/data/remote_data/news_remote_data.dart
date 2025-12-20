@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:final_project_news_app/consts/api_key.dart';
 import 'package:final_project_news_app/models/news_model.dart';
-import 'package:flutter/rendering.dart';
 
 abstract class NewsRemoteData {
   Future<List<NewsModel>> getNews();
@@ -17,8 +16,6 @@ class NewsRemoteDataImpl implements NewsRemoteData {
         'https://newsapi.org/v2/top-headlines',
         queryParameters: {'country': 'us', 'apiKey': newsApiKey},
       );
-
-      debugPrint('API Response: ${response.data}');
 
       return (response.data['articles'] as List)
           .map((e) => NewsModel.fromJson(e))
