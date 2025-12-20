@@ -1,4 +1,5 @@
 import 'package:final_project_news_app/blocs/auth/auth_cubit.dart';
+import 'package:final_project_news_app/blocs/theme/theme_cubit.dart';
 import 'package:final_project_news_app/consts/colors.dart';
 import 'package:final_project_news_app/consts/routes.dart';
 import 'package:flutter/material.dart';
@@ -49,11 +50,15 @@ class _SettingsPageState extends State<SettingsPage> {
             ListTile(
               leading: Icon(Icons.light_mode_outlined),
               title: Text('Theme'),
-              trailing: Switch(
-                value: darkMode,
-                onChanged: (value) => setState(() {
-                  darkMode = value;
-                }),
+              trailing: BlocBuilder<ThemeCubit, ThemeData>(
+                builder: (context, state) {
+                  return Switch(
+                    value: state.brightness == Brightness.dark,
+                    onChanged: (value) => setState(() {
+                      context.read<ThemeCubit>().toggleTheme();
+                    }),
+                  );
+                },
               ),
               onTap: null,
             ),

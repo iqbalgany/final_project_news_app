@@ -97,11 +97,14 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                       // SizedBox(width: 10),
 
                       ///
-                      Text(
-                        widget.news.author ?? 'No Author',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey,
+                      Expanded(
+                        child: Text(
+                          widget.news.author ?? 'No Author',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
                       // Spacer(),

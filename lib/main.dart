@@ -1,11 +1,11 @@
 import 'package:final_project_news_app/blocs/auth/auth_cubit.dart';
 import 'package:final_project_news_app/blocs/news/news_cubit.dart';
+import 'package:final_project_news_app/blocs/theme/theme_cubit.dart';
 import 'package:final_project_news_app/consts/routes.dart';
 import 'package:final_project_news_app/data/remote_data/news_remote_data.dart';
 import 'package:final_project_news_app/helpers/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,16 +24,17 @@ class MainApp extends StatelessWidget {
         BlocProvider<NewsCubit>(
           create: (context) => NewsCubit(NewsRemoteDataImpl()),
         ),
+        BlocProvider<ThemeCubit>(create: (context) => ThemeCubit()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
-          appBarTheme: AppBarTheme(backgroundColor: Colors.white),
-          textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
-        ),
-        initialRoute: AppRoutes.login,
-        routes: routes,
+      child: BlocBuilder<ThemeCubit, ThemeData>(
+        builder: (context, theme) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: theme,
+            initialRoute: AppRoutes.login,
+            routes: routes,
+          );
+        },
       ),
     );
   }
