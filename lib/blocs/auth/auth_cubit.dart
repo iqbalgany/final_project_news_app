@@ -1,17 +1,17 @@
 import 'package:final_project_news_app/blocs/auth/auth_state.dart';
-import 'package:final_project_news_app/data/locat_storage/auth_service.dart';
+import 'package:final_project_news_app/data/local_storage/auth_local_storage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  final AuthService _authService;
+  final AuthLocalStorage _AuthLocalStorage;
 
-  AuthCubit(this._authService) : super(AuthInitial()) {
+  AuthCubit(this._AuthLocalStorage) : super(AuthInitial()) {
     checkAuthStatus();
   }
 
   Future<void> checkAuthStatus() async {
     emit(AuthLoading());
-    final user = await _authService.getCurrentUser();
+    final user = await _AuthLocalStorage.getCurrentUser();
     if (user != null) {
       emit(AuthSuccess(user));
     } else {
@@ -26,7 +26,7 @@ class AuthCubit extends Cubit<AuthState> {
   }) async {
     emit(AuthLoading());
     try {
-      final user = await _authService.register(
+      final user = await _AuthLocalStorage.register(
         email: email,
         password: password,
         phoneNumber: phoneNumber,
@@ -41,7 +41,10 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthLoading());
 
     try {
-      final user = await _authService.login(email: email, password: password);
+      final user = await _AuthLocalStorage.login(
+        email: email,
+        password: password,
+      );
 
       emit(AuthSuccess(user));
     } catch (e) {
@@ -58,7 +61,7 @@ class AuthCubit extends Cubit<AuthState> {
 
       emit(AuthLoading());
       try {
-        final user = await _authService.updateProfile(
+        final user = await _AuthLocalStorage.updateProfile(
           userId: currentUser.id,
           name: name,
           address: address,
@@ -73,7 +76,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> fetchUser() async {
     try {
-      final user = await _authService.getCurrentUser();
+      final user = await _AuthLocalStorage.getCurrentUser();
       if (user != null) {
         emit(AuthSuccess(user));
       } else {
@@ -85,7 +88,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> logout() async {
-    await _authService.logout();
+    await _AuthLocalStorage.logout();
     emit(AuthLoggetOut());
   }
 }

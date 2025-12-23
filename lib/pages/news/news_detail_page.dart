@@ -1,5 +1,8 @@
-import 'package:final_project_news_app/models/news_model.dart';
+import 'package:final_project_news_app/blocs/bookmark/bookmark_cubit.dart';
+import 'package:final_project_news_app/blocs/bookmark/bookmark_state.dart';
+import 'package:final_project_news_app/models/news/news_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:intl/intl.dart';
 
@@ -12,7 +15,6 @@ class NewsDetailPage extends StatefulWidget {
 }
 
 class _NewsDetailPageState extends State<NewsDetailPage> {
-  bool isSaved = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,13 +27,25 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
         actions: [
           IconButton(
             onPressed: () {
-              isSaved = !isSaved;
-              setState(() {});
+              context.read<BookmarkCubit>().toggleBookmark(widget.news);
             },
-            color: Colors.black,
-            icon: isSaved
-                ? Icon(Icons.bookmark)
-                : Icon(Icons.bookmark_border_outlined),
+            icon: BlocBuilder<BookmarkCubit, BookmarkState>(
+              builder: (context, state) {
+                bool isSaved = false;
+                if (state is BookmarkStatusChanged) {
+                  isSaved = state.isSaved;
+                } else if (state is BookmarkLoaded) {
+                  isSaved = state.savedNews.any(
+                    (element) => element.url == widget.news.url,
+                  );
+                }
+
+                return Icon(
+                  isSaved ? Icons.bookmark : Icons.bookmark_add_outlined,
+                  color: isSaved ? Colors.black : null,
+                );
+              },
+            ),
           ),
           Icon(Icons.bookmark_border_outlined, color: Colors.transparent),
         ],

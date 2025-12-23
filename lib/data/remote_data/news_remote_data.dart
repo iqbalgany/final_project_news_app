@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:final_project_news_app/consts/api_key.dart';
-import 'package:final_project_news_app/models/news_model.dart';
+import 'package:final_project_news_app/models/news/news_model.dart';
 
 abstract class NewsRemoteData {
   Future<List<NewsModel>> getNews();

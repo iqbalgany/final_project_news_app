@@ -1,7 +1,7 @@
-import 'package:final_project_news_app/models/user_model.dart';
+import 'package:final_project_news_app/models/user/user_model.dart';
 import 'package:hive/hive.dart';
 
-class AuthService {
+class AuthLocalStorage {
   static const String _userBox = 'users';
   static const String _currentUserBox = 'currentUser';
 

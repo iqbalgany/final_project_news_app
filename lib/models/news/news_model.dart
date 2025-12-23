@@ -1,13 +1,32 @@
-import 'package:final_project_news_app/models/source_model.dart';
+import 'package:final_project_news_app/models/source/source_model.dart';
+import 'package:hive/hive.dart';
 
+part 'news_model.g.dart';
+
+@HiveType(typeId: 1)
 class NewsModel {
+  @HiveField(0)
   final SourceModel source;
+
+  @HiveField(1)
   final String? author;
+
+  @HiveField(2)
   final String? title;
+
+  @HiveField(3)
   final String? description;
+
+  @HiveField(4)
   final String? url;
+
+  @HiveField(5)
   final String? urlToImage;
+
+  @HiveField(6)
   final DateTime? publishedAt;
+
+  @HiveField(7)
   final String? content;
 
   NewsModel({

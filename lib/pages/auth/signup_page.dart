@@ -1,7 +1,7 @@
 import 'package:final_project_news_app/blocs/auth/auth_cubit.dart';
 import 'package:final_project_news_app/blocs/auth/auth_state.dart';
 import 'package:final_project_news_app/consts/colors.dart';
-import 'package:final_project_news_app/data/locat_storage/auth_service.dart';
+import 'package:final_project_news_app/data/local_storage/auth_local_storage.dart';
 import 'package:final_project_news_app/helpers/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,7 +31,7 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => AuthCubit(getIt<AuthService>()),
+      create: (_) => AuthCubit(getIt<AuthLocalStorage>()),
       child: Scaffold(
         body: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {

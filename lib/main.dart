@@ -1,4 +1,5 @@
 import 'package:final_project_news_app/blocs/auth/auth_cubit.dart';
+import 'package:final_project_news_app/blocs/bookmark/bookmark_cubit.dart';
 import 'package:final_project_news_app/blocs/news/news_cubit.dart';
 import 'package:final_project_news_app/blocs/theme/theme_cubit.dart';
 import 'package:final_project_news_app/consts/routes.dart';
@@ -25,6 +26,9 @@ class MainApp extends StatelessWidget {
           create: (context) => NewsCubit(NewsRemoteDataImpl()),
         ),
         BlocProvider<ThemeCubit>(create: (context) => ThemeCubit()),
+        BlocProvider<BookmarkCubit>(
+          create: (context) => BookmarkCubit()..fetchAllSavedNews(),
+        ),
       ],
       child: BlocBuilder<ThemeCubit, ThemeData>(
         builder: (context, theme) {
